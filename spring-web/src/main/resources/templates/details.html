@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xmlsn="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${title}">Document</title>
+</head>
+<body>
+<h1 th:text="${title}"></h1>
+<ul>
+    <li th:text="${user.name}"/>
+    <li th:text="${user.lastname}"/>
+    <li th:if="${user.email != null}" th:text="${user.email}"/>
+    <li th:if="${user.email == null}" th:text="${'Whitout email'}"/>
+    <li><a th:href="@{/details-list}">Go details list</a></li>
+    <li><a th:href="@{/api/params/foo?message=Hi Eder you will build the best application in the world}">Watch message way one</a></li>
+    <li><a th:href="@{'/api/params/foo?message=' + ${title}}">Watch message way two</a></li>
+    <li><a th:href="@{/api/params/foo(message='Hi Eder you will build the best application in the world')}">Watch message way three</a></li>
+    <li><a th:href="@{/api/params/bar(text='Hi Eder you will build the best application in the world', code=12345)}">Watch message way four</a></li>
+</ul>
+
+</body>
+</html>
