@@ -18,6 +18,6 @@ public class RelationsJpaApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        invoiceClientService.manyToManyRemove();
+        invoiceClientService.manyToManyRemoveBidirectionalFind();
     }
 }

@@ -27,6 +27,115 @@ public class InvoiceClientService {
     @Autowired
     private ICourseRepository iCourseRepository;
 
+
+    @Transactional
+    public void manyToManyRemoveBidirectionalFind() {
+        Optional<Student> optionalStudent = iStudentRepository.findOneWithCourses(1L);
+        Optional<Student> optionalStudent2 = iStudentRepository.findOneWithCourses(2L);
+
+        Student student1 = optionalStudent.get();
+        Student student2 = optionalStudent2.get();
+
+        Course course = iCourseRepository.findOneWithStudents(1L).get();
+        Course course2 = iCourseRepository.findOneWithStudents(2L).get();
+
+        student1.addCourses(course, course2);
+
+        student2.addCourse(course2);
+
+        iStudentRepository.saveAll(Set.of(student1, student2));
+
+        System.out.println("Student 1: " + optionalStudent);
+        System.out.println("Student 2: " + optionalStudent2);
+
+
+        Optional<Student> optionalStudentDb = iStudentRepository.findOneWithCourses(1L);
+        if (optionalStudentDb.isPresent()) {
+            Student studentDb = optionalStudentDb.get();
+            Optional<Course> courseOptionalDb = iCourseRepository.findOneWithStudents(1L);
+
+            System.out.println("Student before to delete: " + studentDb);
+            if (courseOptionalDb.isPresent()) {
+                Course courseDb = courseOptionalDb.get();
+                studentDb.removeCourse(courseDb);
+
+                System.out.println("Student deleted: " + iStudentRepository.save(studentDb));
+            }
+        }
+    }
+
+
+    @Transactional
+    public void manyToManyBidirectionalFind() {
+        Optional<Student> optionalStudent = iStudentRepository.findOneWithCourses(1L);
+        Optional<Student> optionalStudent2 = iStudentRepository.findOneWithCourses(2L);
+
+        Student student1 = optionalStudent.get();
+        Student student2 = optionalStudent2.get();
+
+        Course course = iCourseRepository.findOneWithStudents(1L).get();
+        Course course2 = iCourseRepository.findOneWithStudents(2L).get();
+
+        student1.addCourses(course, course2);
+
+        student2.addCourse(course2);
+
+        iStudentRepository.saveAll(Set.of(student1, student2));
+
+        System.out.println("Student 1: " + optionalStudent);
+        System.out.println("Student 2: " + optionalStudent2);
+    }
+
+    @Transactional
+    public void manyToManyBidirectionalRemove() {
+        Student student = new Student("Jano", "Pura");
+        Student student2 = new Student("Elba", "Coe");
+
+        Course course = new Course("Master in java", "Andres");
+        Course course2 = new Course("Spring boot course", "Andres");
+
+        student.addCourses(course, course2);
+
+        student2.addCourse(course2);
+
+        iStudentRepository.saveAll(Set.of(student, student2));
+
+        System.out.println("Student 1: " + student);
+        System.out.println("Student 2: " + student2);
+
+        Optional<Student> optionalStudentDb = iStudentRepository.findOneWithCourses(4L);
+        if (optionalStudentDb.isPresent()) {
+            Student studentDb = optionalStudentDb.get();
+            Optional<Course> courseOptionalDb = iCourseRepository.findOneWithStudents(3L);
+
+            System.out.println("Student before to delete: " + studentDb);
+            if (courseOptionalDb.isPresent()) {
+                Course courseDb = courseOptionalDb.get();
+                studentDb.removeCourse(courseDb);
+
+                System.out.println("Student deleted: " + iStudentRepository.save(studentDb));
+            }
+        }
+    }
+
+    @Transactional
+    public void manyToManyBidirectional() {
+        Student student = new Student("Jano", "Pura");
+        Student student2 = new Student("Elba", "Coe");
+
+        Course course = new Course("Master in java", "Andres");
+        Course course2 = new Course("Spring boot course", "Andres");
+
+        student.addCourses(course, course2);
+
+        student2.addCourse(course2);
+
+        iStudentRepository.saveAll(Set.of(student, student2));
+
+        System.out.println("Student 1: " + student);
+        System.out.println("Student 2: " + student2);
+    }
+
     @Transactional
     public void manyToManyRemove() {
         Student student = new Student("Jano", "Pura");
@@ -111,7 +220,6 @@ public class InvoiceClientService {
         System.out.println("Student 1: " + optionalStudent);
         System.out.println("Student 2: " + optionalStudent2);
     }
-
 
     @Transactional
     public void manyToMany() {
