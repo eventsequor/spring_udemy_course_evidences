@@ -18,4 +18,6 @@ public interface IProductService {
     Optional<Product> delete(Product product);
 
     Optional<Product> delete(Long id);
+
+    boolean existBySku(String sku);
 }

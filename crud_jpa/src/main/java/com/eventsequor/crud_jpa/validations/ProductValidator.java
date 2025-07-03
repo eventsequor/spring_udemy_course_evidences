@@ -1,4 +1,4 @@
-package com.eventsequor.crud_jpa;
+package com.eventsequor.crud_jpa.validations;
 
 import com.eventsequor.crud_jpa.entities.Product;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.eventsequor.crud_jpa.controllers;
 
-import com.eventsequor.crud_jpa.ProductValidator;
+import com.eventsequor.crud_jpa.validations.ProductValidator;
 import com.eventsequor.crud_jpa.entities.Product;
 import com.eventsequor.crud_jpa.services.IProductService;
 import jakarta.validation.Valid;
@@ -22,9 +22,6 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @Autowired
-    private ProductValidator productValidator;
-
     @GetMapping
     public List<Product> list() {
         return productService.findAll();
@@ -40,7 +37,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult bindingResult) {
-        productValidator.validate(product, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return validation(bindingResult);
         }
@@ -49,7 +45,6 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult bindingResult, @PathVariable Long id) {
-        productValidator.validate(product, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             return validation(bindingResult);
         }
