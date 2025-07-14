@@ -14,7 +14,7 @@ public class Product {
     private Long id;
 
     @IsRequired(message = "{IsRequired.product.name}")
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 30)
     private String name;
 
     @Min(value = 500, message = "{Min.product.price}")

@@ -1,11 +1,15 @@
 package com.eventsequor.crud_jpa.entities;
 
+import com.eventsequor.crud_jpa.validations.ExistsByUserName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ExistsByUserName
     @Column(unique = true)
     @NotBlank
     @Size(min = 4, max = 12)
@@ -23,6 +28,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @JsonIgnoreProperties({"users", "handler", "hibernateLazyInitializer"})
     @ManyToMany
     @JoinTable(
             name = "users_roles",
@@ -35,7 +41,17 @@ public class User {
     private boolean enable;
 
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private boolean admin;
+
+    public User() {
+        this.roles = new ArrayList<>();
+    }
+
+    @PrePersist
+    public void prePersist() {
+        enable = true;
+    }
 
     public Long getId() {
         return id;
@@ -83,5 +99,17 @@ public class User {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username);
     }
 }

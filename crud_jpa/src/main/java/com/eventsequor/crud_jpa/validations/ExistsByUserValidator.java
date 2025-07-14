@@ -1,19 +1,21 @@
 package com.eventsequor.crud_jpa.validations;
 
-import com.eventsequor.crud_jpa.services.IProductService;
+import com.eventsequor.crud_jpa.services.IUserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class IsExistDbValidator implements ConstraintValidator<IsExistDb, String> {
+@Component
+public class ExistsByUserValidator implements ConstraintValidator<ExistsByUserName, String> {
 
     @Autowired
-    private IProductService productService;
+    private IUserService userService;
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        if (productService == null)
+        if (userService == null)
             return true;
-        return !productService.existBySku(s);
+        return !userService.existsByUsername(s);
     }
 }
