@@ -13,3 +13,13 @@ target/
 
 /.DS_Store
 .DS_Store
+
+./frontend/react-app/node_modules/
+frontend/react-app/node_modules/
+/frontend/react-app/build/
+frontend/react-app/build/
+/frontend/react-app/.env
+/frontend/react-app/.env.local
+/frontend/react-app/.env.development
+/frontend/react-app/.env.production
+/frontend/react-app/.env.test   
