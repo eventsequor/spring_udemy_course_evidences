@@ -8,6 +8,5 @@ import ProductTable from './components/ProductTable.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ProductApp title={"Table Hi Eder"}/>
-    <ProductTable/>
   </StrictMode>,
 )
